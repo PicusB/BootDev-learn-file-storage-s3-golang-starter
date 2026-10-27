@@ -145,6 +145,21 @@ func (c Client) UpdateVideo(video Video) error {
 	return err
 }
 
+func (c Client) UpdateVideoThumbnailURL(videoID uuid.UUID, thumbnailURL string) error {
+	query := `
+	UPDATE videos
+	SET
+		thumbnail_url = ?
+	WHERE id = ?
+	`
+	_, err := c.db.Exec(
+		query,
+		&thumbnailURL,
+		videoID,
+	)
+	return err
+}
+
 func (c Client) DeleteVideo(id uuid.UUID) error {
 	query := `
 	DELETE FROM videos
